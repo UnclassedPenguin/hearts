@@ -103,7 +103,7 @@
 
     function showScoreField() {
       document.getElementById("main-content").innerHTML = 
-        "<p>Score to play to (ie 100)</p>\<br><label for='score'>Score: </label>\<input type='number' id='score' name='score'>\<br><button type='button' class='btn btn-light btn-small' onclick='getScoreValue()' id='getScoreValue'>Set Score</button>" 
+        "<p>Score to play to (ie 100)</p>\<br><label for='score'>Score: </label>\<input type='number' value=100 id='score' name='score'>\<br><button type='button' class='btn btn-light btn-small' onclick='getScoreValue()' id='getScoreValue'>Set Score</button>" 
     }
     function getScoreValue() {
       let score = document.getElementById("score").value;
