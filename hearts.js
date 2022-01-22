@@ -1,6 +1,8 @@
 // Global Variables
 const players = [];
-
+let maxScore = 0;
+let trick = 1;
+let gameOver = false;
 
 var todaysdate = Date();
 document.getElementById("date").innerHTML = todaysdate;
@@ -31,16 +33,16 @@ function getNames() {
   players.push(player4);
   
   function checkEmpty(value, index, array) {
-    console.log("Value = " + value);
-    console.log("Index = " + index);
-    console.log("Array = " + array);
+    //console.log("Value = " + value);
+    //console.log("Index = " + index);
+    //console.log("Array = " + array);
     if (value == "") {
       players.splice(index, 1);
     }
   }
   
   function createPlayer(value, index, array) {
-    window['player' + index] = {name: value, win: false, score: 0};
+    window['player' + index] = {name: value, lose: false, win: false, score: 0};
   }
   players.forEach(checkEmpty);
   players.forEach(checkEmpty);
@@ -58,13 +60,68 @@ function showScoreField() {
 
 
 function getScoreValue() {
-  let score = document.getElementById("score").value;
-  console.log("Score: " + score);
+  maxScore = parseInt(document.getElementById("score").value);
+  //console.log("Score: " + maxScore);
   clearDiv();
   showMainScreen();
 }
 
 
+function gameIsOver() {
+
+  function showPlayersScore(value, index, array) {
+    htmlstring = "<p>" + window["player" + index].name + ": " + window["player" + index].score + "</p>";
+    html += htmlstring;
+  }
+
+  function getFinalScore(value, index, array) {
+    playersFinalScore.push(window["player" + index].score); 
+  }
+
+  function findMin() {
+    let min = Math.min(...playersFinalScore);
+    //console.log("MIN: " + min);
+    return min;
+  }
+  
+  function findWinner(value, index, array) {
+    //console.log("INSIDE FIND WINNER: ");
+    //console.log("MIN INSIDE: " + min);
+    if (window["player" + index].score == min) {
+      window["player" + index].win = true;
+    }
+  }
+
+  function showWinner(value, index, array) {
+    if (window["player" + index].win == true) {
+      html += "<p>" + window["player" + index].name + " Wins!</p>";
+    }
+  }
+
+  function startAgain() {
+    location.reload(true);
+  }
+
+  clearDiv();
+  let html = "<h5>Game Over!</h5>";
+  players.forEach(showPlayersScore);
+  let playersFinalScore = []
+  players.forEach(getFinalScore);
+  //console.log("PLAYERS FINAL SCORE: " + playersFinalScore);
+  let min = findMin();
+  players.forEach(findWinner);
+  players.forEach(showWinner);
+  
+  addButton = "<br><button type='button' class='btn btn-light btn-small' id='playAgain'>Play Again</button>";
+  html += addButton;
+  document.getElementById("main-content").innerHTML = html;
+  document.getElementById("playAgain").addEventListener("click", startAgain, false);
+}
+
+
+// This is the main loop where scores are taken and added up
+// until someone breaks maxScore
+//
 function showMainScreen() {
   
   function showPlayersScore(value, index, array) {
@@ -78,26 +135,64 @@ function showMainScreen() {
   }
  
   function addScore(value, index, array) {
+    //console.log("Add Score for player " + window["player" + index].name)
     trickpoints = document.getElementById(window["player" + index].name + 'score').value;
-    window["player" + index].score += trickpoints;
-    showMainScreen();
+    //console.log("Trickpoints: " + trickpoints)
+    //console.log("Trickpoints type: " + typeof(trickpoints))
+    let trickpointint = parseInt(trickpoints)
+    //console.log("Trickpointint: " + trickpointint)
+    //console.log("Trickpointint type: " + typeof(trickpointint))
+    window["player" + index].score += trickpointint;
+  }
+
+  function checkScore(value, index, array) {
+    if (window["player" + index].score >= maxScore) {
+      //console.log("PLAYER HAS LOST DO SOMETHING ABOUT IT");
+      window["player" + index].lose = true;
+      gameOver = true;
+    } else {
+      //console.log("GAME CONTINUES");
+    }
   }
 
   function scoreButton() {
     players.forEach(addScore);
+    players.forEach(checkScore);
+    trick += 1;
+    if (gameOver == false) {
+      showMainScreen();
+    } else {
+      gameIsOver();
+    }
+
   }
 
-  let html = "<h5>MAIN SCREEN</h5>";
+  // This is what shows all of the info for the game
+  // Above this are all functions to do all of the things :P
+  
+  let html = "<h5>Game: </h5>";
+
+  html += "<h6> Trick: " + trick + "</h6>";
+
+  if (trick % 2 == 0) {
+    html += "<p>Pass Cards Right</p>";
+  } else {
+    html += "<p>Pass Cards Left</p>";
+  }
+  html += "<p>Points: </p>"
+
   players.forEach(showPlayersScore); 
+  html += "<h5> Add Points: </h5>";
   players.forEach(showScore); 
   addButton = "<br><button type='button' class='btn btn-light btn-small' id='addScore'>Add Score</button>";
-  html += addButton
-  document.getElementById("main-content").innerHTML = html
+  html += addButton;
+  document.getElementById("main-content").innerHTML = html;
   document.getElementById("addScore").addEventListener("click", scoreButton, false);
 }
-  // Main program start
-  showNameFields()
 
+
+// Main program start
+showNameFields();
 
 
 
