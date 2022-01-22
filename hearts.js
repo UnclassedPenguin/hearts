@@ -73,7 +73,7 @@ function showMainScreen() {
   }
 
   function showScore(value, index, array) {
-    htmlstring = "<p>" + window["player" + index].name + ": " + "<input type='number' value=0 id='" + window["player" + index].name + "score' name=score>";
+    htmlstring = "<p>" + window["player" + index].name + ": " + "<input type='number' value=0 id='" + window["player" + index].name + "score' name='score'>";
     html += htmlstring;
   }
  
