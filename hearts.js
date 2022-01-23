@@ -58,7 +58,7 @@ function clearDiv() {
 //Start of "program", asks for names of players
 function showNameFields() {
   document.getElementById("main-content").innerHTML +=
-    "<h5>Please Enter 3-5 players</h5><form><p><label for='player1'>Player 1: </label><input type='text' id='player1' name='players'></p><p><label for='player2'>Player 2: </label><input type='text' id='player2' name='players'></p><p><label for='player3'>Player 3: </label><input type='text' id='player3' name='players'></p><p><label for='player4'>Player 4: </label><input type='text' id='player4' name='players'></p><p><label for='player5'>Player 5: </label><input type='text' id='player5' name='players'></p></form><button type='button' class='btn btn-light btn-small' id='getNamesButton'>Set Players</button>"
+    "<h5>Please Enter 3-5 players</h5><form><p class='rowp'><label for='player1'>Player 1: </label><input type='text' id='player1' name='players'></p><p class='rowp'><label for='player2'>Player 2: </label><input type='text' id='player2' name='players'></p><p class='rowp'><label for='player3'>Player 3: </label><input type='text' id='player3' name='players'></p><p class='rowp'><label for='player4'>Player 4: </label><input type='text' id='player4' name='players'></p><p class='rowp'><label for='player5'>Player 5: </label><input type='text' id='player5' name='players'></p></form><button type='button' class='btn btn-light btn-small' id='getNamesButton'>Set Players</button>"
   document.getElementById("getNamesButton").addEventListener("click", getNames, false);
 }
 
