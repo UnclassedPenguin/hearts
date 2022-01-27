@@ -12,12 +12,13 @@
 
 
 // Global Variables
+//
 // List of players
 var players = [];
 // Max score to play the game to, this is set later on by the player
 var maxScore = 0;
 // Trick number, helps keep track of which direction to pass cards
-// at the beginning of a game
+// at the beginning of a trick
 var trick = 1;
 // Variable to change when someone has broken max score and signal
 // that the game is over
@@ -58,7 +59,7 @@ function clearDiv() {
 
 //Start of "program", asks for names of players
 function showNameFields() {
-  document.getElementById("main-content").innerHTML +=
+  document.getElementById("main-content").innerHTML =
     "<h5>Please Enter 3-5 players</h5><form><p class='rowp'><label for='player1'>Player 1: </label><input type='text' id='player1' name='players'></p><p class='rowp'><label for='player2'>Player 2: </label><input type='text' id='player2' name='players'></p><p class='rowp'><label for='player3'>Player 3: </label><input type='text' id='player3' name='players'></p><p class='rowp'><label for='player4'>Player 4: </label><input type='text' id='player4' name='players'></p><p class='rowp'><label for='player5'>Player 5: </label><input type='text' id='player5' name='players'></p></form><button type='button' class='btn btn-light btn-small' id='getNamesButton'>Set Players</button>";
   document.getElementById("getNamesButton").addEventListener("click", getNames, false);
 }
@@ -66,6 +67,7 @@ function showNameFields() {
 
 // Function to grab the names in the name fields,
 // Gets the names and adds them to a players list
+// also creates player objects to keep track of score
 function getNames() {
   let player0 = document.getElementById("player1").value;
   let player1 = document.getElementById("player2").value;
@@ -128,6 +130,7 @@ function getScoreValue() {
 function showMainScreen() {
   
   // Displays players score updates on button click
+  // forEach player
   function showPlayersScore(value, index, array) {
     htmlstring = "<tr><th class='righta'>" + window["player" + index].name + ": </th><th>" + window["player" + index].score + "</th></tr>";
     html += htmlstring;
@@ -142,13 +145,8 @@ function showMainScreen() {
   // This gets the values of the input fields and adds to each players total score 
   // player.score
   function addScore(value, index, array) {
-    //console.log("Add Score for player " + window["player" + index].name)
     trickpoints = document.getElementById(window["player" + index].name + 'score').value;
-    //console.log("Trickpoints: " + trickpoints)
-    //console.log("Trickpoints type: " + typeof(trickpoints))
     let trickpointint = parseInt(trickpoints);
-    //console.log("Trickpointint: " + trickpointint)
-    //console.log("Trickpointint type: " + typeof(trickpointint))
     window["player" + index].score += trickpointint;
   }
 
@@ -160,25 +158,22 @@ function showMainScreen() {
       //console.log("PLAYER HAS LOST DO SOMETHING ABOUT IT");
       window["player" + index].lose = true;
       gameOver = true;
-    } else {
-      //console.log("GAME CONTINUES");
-    }
+    } 
   }
 
-  // Function that runs when button is pressed. Calls other functions 
+  // Function that runs when "Add to score" button is pressed. Calls other functions 
   // to add scores and check scores against maxScore if gameOver is
   // equal to true here it switches to gameIsOver function to display
   // final scores and who has won the game
   function scoreButton() {
     players.forEach(addScore);
     players.forEach(checkScore);
-    trick += 1;
     if (gameOver == false) {
+      trick += 1;
       showMainScreen();
     } else {
       gameIsOver();
     }
-
   }
 
   // This is what shows all of the info for the game
@@ -252,11 +247,12 @@ function gameIsOver() {
   function startAgain() {
     location.reload(true);
   }
-
+  
   // Main area of this function that sets up all the html and
   // order of the inner functions
   clearDiv();
   let html = "<h4>Game Over!</h4><br>";
+  html += "<h5>Won in " + trick + " tricks.</h5>";
   html += "<h5>Final Points:</h5>";
   html += "<table>";
   players.forEach(showPlayersScore);
