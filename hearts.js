@@ -1,7 +1,8 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //
-// UnclassedPenguin Hearts points tracker
+// Tyler(UnclassedPenguin) Hearts points tracker
+//
 // A javascript program for tracking points in hearts,
 // cause I'm lazy mostly and don't want to do the math in 
 // my head during a game :P
@@ -63,8 +64,34 @@ function clearDiv() {
 
 //Start of "program", asks for names of players
 function showNameFields() {
-  document.getElementById("main-content").innerHTML =
-    "<h5>Please Enter 3-5 players</h5><form><p class='rowp'><label for='player1'>Player 1: </label><input type='text' id='player1' name='players'></p><p class='rowp'><label for='player2'>Player 2: </label><input type='text' id='player2' name='players'></p><p class='rowp'><label for='player3'>Player 3: </label><input type='text' id='player3' name='players'></p><p class='rowp'><label for='player4'>Player 4: </label><input type='text' id='player4' name='players'></p><p class='rowp'><label for='player5'>Player 5: </label><input type='text' id='player5' name='players'></p></form><button type='button' class='btn btn-light btn-small' id='getNamesButton'>Set Players</button>";
+    let showNameFieldHtml = `
+    <h5>Please Enter 3-5 players</h5>
+    <form>
+      <p class='rowp'>
+      <label for='player1'>Player 1: </label>
+      <input type='text' id='player1' name='players'>
+      </p>
+      <p class='rowp'>
+      <label for='player2'>Player 2: </label>
+      <input type='text' id='player2' name='players'>
+      </p>
+      <p class='rowp'>
+      <label for='player3'>Player 3: </label>
+      <input type='text' id='player3' name='players'>
+      </p>
+      <p class='rowp'>
+      <label for='player4'>Player 4: </label>
+      <input type='text' id='player4' name='players'>
+      </p>
+      <p class='rowp'>
+      <label for='player5'>Player 5: </label>
+      <input type='text' id='player5' name='players'>
+      </p>
+    </form>
+    <button type='button' class='btn btn-light btn-small' id='getNamesButton'>Set Players</button>
+    `;
+
+  document.getElementById("main-content").innerHTML = showNameFieldHtml;
   document.getElementById("getNamesButton").addEventListener("click", getNames, false);
 }
 
@@ -113,8 +140,16 @@ function getNames() {
 
 // Displays html to ask for input on what the Max Score should be
 function showScoreField() {
-  document.getElementById("main-content").innerHTML =
-    "<br><h5>Score to play to (ie 100)</h5>\<br><label for='score'>Score: </label>\<input type='number' value=100 id='score' name='score'>\<br><button type='button' class='btn btn-light btn-small' id='getScoreValue'>Set Score</button>";
+  let showScoreFieldHtml = `
+    <br>
+    <h5>Score to play to (ie 100)</h5>
+    <br>
+    <label for='score'>Score: </label>
+    <input type='number' value=100 id='score' name='score'>
+    <br>
+    <button type='button' class='btn btn-light btn-small' id='getScoreValue'>Set Score</button>
+  `;
+  document.getElementById("main-content").innerHTML = showScoreFieldHtml;
   document.getElementById("getScoreValue").addEventListener("click", getScoreValue, false);
 }
 
@@ -180,7 +215,7 @@ function showMainScreen() {
     }
   }
 
-  // This is what shows all of the info for the game
+  // This is what shows all of the info for the game.
   // Above this are all functions to do all of the things :P
   let html = "<h5>Game: </h5>";
   if (trick % 2 == 0) {
