@@ -1,14 +1,18 @@
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//
 // UnclassedPenguin Hearts points tracker
 // A javascript program for tracking points in hearts,
 // cause I'm lazy mostly and don't want to do the math in 
 // my head during a game :P
 // 
-//  Written by: Tyler(UnclassedPenguin)
+//  Written by: Tyler(UnclassedPenguin) 2022
+//        Site: https://unclassed.ca
 //      GitHub: https://github.com/UnclassedPenguin
 // This GitHub: https://github.com/UnclassedPenguin/hearts.git
-//        Site: https://unclassed.ca
 //
-//
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 
 // Global Variables
