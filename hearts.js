@@ -17,7 +17,7 @@
 
 
 // Global Variables
-//
+
 // List of players
 var players = [];
 // Max score to play the game to, this is set later on by the player
@@ -32,7 +32,7 @@ var gameOver = false;
 
 // Get date and print to date div
 const d = new Date();
-var downame = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+var downame = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var dowint = d.getDay();
 var dow = downame[dowint];
 var day = d.getDate();
@@ -40,11 +40,11 @@ var monthname = ["January", "February", "March", "April", "May", "June",
                  "July", "August", "September", "October", "November", "December"];
 var monthint = d.getMonth();
 var month = monthname[monthint];
-var year = d.getFullYear()
+var year = d.getFullYear();
 
 // Function to display time correctly ie 09, instead of 9
 function addZero(i) {
-  if (i < 10) {i = "0" + i}
+  if (i < 10) {i = "0" + i;}
   return i;
 }
 
@@ -111,8 +111,8 @@ function getNames() {
   players.push(player2);
   players.push(player3);
   players.push(player4);
-  
-  // Checks if there are empty values in the list, and 
+
+  // Checks if there are empty values in the list, and
   // removes them
   function checkEmpty(value, index, array) {
     //console.log("Value = " + value);
@@ -122,11 +122,11 @@ function getNames() {
       players.splice(index, 1);
     }
   }
- 
+
   // Creates an object of all players in the players list
   // called: player0, player1, player2, etc...
   function createPlayer(value, index, array) {
-    window['player' + index] = {name: value, lose: false, win: false, score: 0};
+    window["player" + index] = {name: value, lose: false, win: false, score: 0};
   }
 
   players.forEach(checkEmpty);
@@ -167,40 +167,40 @@ function getScoreValue() {
 // This is the main loop where scores are taken and added up
 // until someone breaks maxScore
 function showMainScreen() {
-  
+
   // Displays players score updates on button click
   // forEach player
   function showPlayersScore(value, index, array) {
-    htmlstring = "<tr><th class='righta'>" + window["player" + index].name + ": </th><th>" + window["player" + index].score + "</th></tr>";
+    let htmlstring = "<tr><th class='righta'>" + window["player" + index].name + ": </th><th>" + window["player" + index].score + "</th></tr>";
     html += htmlstring;
   }
 
-  // This displays the input fields to gather the scores 
+  // This displays the input fields to gather the scores
   function showScore(value, index, array) {
-    htmlstring = "<tr><th class='righta'>" + window["player" + index].name + ": </th><th>" + "<input type='number' value=0 id='" + window["player" + index].name + "score' name='score'></th></tr>";
+    let htmlstring = "<tr><th class='righta'>" + window["player" + index].name + ": </th><th>" + "<input type='number' value=0 id='" + window["player" + index].name + "score' name='score'></th></tr>";
     html += htmlstring;
   }
 
-  // This gets the values of the input fields and adds to each players total score 
+  // This gets the values of the input fields and adds to each players total score
   // player.score
   function addScore(value, index, array) {
-    trickpoints = document.getElementById(window["player" + index].name + 'score').value;
+    let trickpoints = document.getElementById(window["player" + index].name + "score").value;
     let trickpointint = parseInt(trickpoints);
     window["player" + index].score += trickpointint;
   }
 
   // This runs every "loop" and checks player.score values against
-  // maxScore to see if anyone has lost, if they have, 
+  // maxScore to see if anyone has lost, if they have,
   // it sets gameOver to true
   function checkScore(value, index, array) {
     if (window["player" + index].score >= maxScore) {
       //console.log("PLAYER HAS LOST DO SOMETHING ABOUT IT");
       window["player" + index].lose = true;
       gameOver = true;
-    } 
+    }
   }
 
-  // Function that runs when "Add to score" button is pressed. Calls other functions 
+  // Function that runs when "Add to score" button is pressed. Calls other functions
   // to add scores and check scores against maxScore if gameOver is
   // equal to true here it switches to gameIsOver function to display
   // final scores and who has won the game
@@ -225,11 +225,11 @@ function showMainScreen() {
   }
   html += "<table><tr><th>Trick: </th><th>" + trick + "</th></tr>";
   html += "<tr><th>Points: </th><th></th></tr>";
-  players.forEach(showPlayersScore); 
+  players.forEach(showPlayersScore);
   html += "<tr><th> <h5> Add Points: </h5> </th></tr>";
-  players.forEach(showScore); 
+  players.forEach(showScore);
   html += "</table>";
-  addButton = "<br><div class='text-center'><button type='button' class='btn btn-light btn-small' id='addScore'>Add To Score</button></div>";
+  let addButton = "<br><div class='text-center'><button type='button' class='btn btn-light btn-small' id='addScore'>Add To Score</button></div>";
   html += addButton;
   document.getElementById("main-content").innerHTML = html;
   document.getElementById("addScore").addEventListener("click", scoreButton, false);
@@ -246,24 +246,24 @@ function gameIsOver() {
 
   // Prints players final score
   function showPlayersScore(value, index, array) {
-    htmlstring = "<tr><th class='righta'>" + window["player" + index].name + ": </th><th>" + window["player" + index].score + "</th></tr>";
+    let htmlstring = "<tr><th class='righta'>" + window["player" + index].name + ": </th><th>" + window["player" + index].score + "</th></tr>";
     html += htmlstring;
   }
 
   // Gets players final score and puts it in a list to compare to see who had
   // lowest score (who won)
   function getFinalScore(value, index, array) {
-    playersFinalScore.push(window["player" + index].score); 
+    playersFinalScore.push(window["player" + index].score);
   }
 
-  // Finds the min value in the list (playersFinalScore) to 
+  // Finds the min value in the list (playersFinalScore) to
   // determine who had low score to see who won
   function findMin() {
     let min = Math.min(...playersFinalScore);
     //console.log("MIN: " + min);
     return min;
   }
-  
+
   // Compares players final score with min to see if they are the one who won,
   // If it matches marks player object win variable (player.win) to true
   function findWinner(value, index, array) {
@@ -286,7 +286,7 @@ function gameIsOver() {
   function startAgain() {
     location.reload(true);
   }
-  
+
   // Main area of this function that sets up all the html and
   // order of the inner functions
   clearDiv();
@@ -302,7 +302,7 @@ function gameIsOver() {
   let min = findMin();
   players.forEach(findWinner);
   players.forEach(showWinner);
-  addButton = "<br><button type='button' class='btn btn-light btn-small' id='playAgain'>Play Again</button>";
+  let addButton = "<br><button type='button' class='btn btn-light btn-small' id='playAgain'>Play Again</button>";
   html += addButton;
   document.getElementById("main-content").innerHTML = html;
   document.getElementById("playAgain").addEventListener("click", startAgain, false);
